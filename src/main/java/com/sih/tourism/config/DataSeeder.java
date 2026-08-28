@@ -144,7 +144,7 @@ public class DataSeeder implements CommandLineRunner {
         h3.setLongitude(82.8800);
         h3.setCity("Araku");
         h3.setRating(4.0);
-        h1.setImgUrl("/images/hotels/arakures.jpg");
+        h3.setImgUrl("/images/hotels/arakures.jpg");
 
         hotelRepository.saveAll(java.util.List.of(h1, h2, h3));
     }
