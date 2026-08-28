@@ -1,6 +1,13 @@
 package com.sih.tourism.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "hotels")
@@ -27,6 +34,8 @@ public class Hotel {
     private String city;
 
     private Double rating; // 0-5
+
+    private String imgUrl;
 
     public Hotel() {
     }
@@ -89,5 +98,13 @@ public class Hotel {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

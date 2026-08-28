@@ -1,6 +1,13 @@
 package com.sih.tourism.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "destinations")
@@ -30,6 +37,9 @@ public class Destination {
     private Double popularityScore;
 
     private String city;
+    
+    private String imgUrl;
+    
 
     public Destination() {
     }
@@ -101,4 +111,13 @@ public class Destination {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
 }

@@ -1,6 +1,13 @@
 package com.sih.tourism.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "shopping_places")
@@ -27,6 +34,8 @@ public class ShoppingPlace {
     private Double longitude;
 
     private String city;
+
+    private String imgUrl;
 
     public ShoppingPlace() {
     }
@@ -89,5 +98,13 @@ public class ShoppingPlace {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }
