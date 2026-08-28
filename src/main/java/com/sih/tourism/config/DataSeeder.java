@@ -36,25 +36,7 @@ public class DataSeeder implements CommandLineRunner {
         this.transportOptionRepository = transportOptionRepository;
     }
 
-    @Override
-    public void run(String... args) {
-        // DEVELOPMENT SAMPLE DATA - only seeds if tables are empty, so it's safe to restart repeatedly.
-        if (destinationRepository.count() == 0) {
-            seedDestinations();
-        }
-        if (hotelRepository.count() == 0) {
-            seedHotels();
-        }
-        if (foodPlaceRepository.count() == 0) {
-            seedFoodPlaces();
-        }
-        if (shoppingPlaceRepository.count() == 0) {
-            seedShoppingPlaces();
-        }
-        if (transportOptionRepository.count() == 0) {
-            seedTransportOptions();
-        }
-    }
+   
 
     private void seedDestinations() {
         Destination d1 = new Destination();
@@ -148,6 +130,83 @@ public class DataSeeder implements CommandLineRunner {
 
         hotelRepository.saveAll(java.util.List.of(h1, h2, h3));
     }
+
+     @Override
+    public void run(String... args) {
+        // DEVELOPMENT SAMPLE DATA - only seeds if tables are empty, so it's safe to restart repeatedly.
+        if (destinationRepository.count() == 0) {
+            seedDestinations();
+        }
+        if (hotelRepository.count() == 0) {
+            seedHotels();
+        }
+        if (foodPlaceRepository.count() == 0) {
+            seedFoodPlaces();
+        }
+        if (shoppingPlaceRepository.count() == 0) {
+            seedShoppingPlaces();
+        }
+        if (transportOptionRepository.count() == 0) {
+            seedTransportOptions();
+        }
+
+        updateImageUrls();
+    }
+
+    private void updateImageUrls() {
+
+    var destinations = destinationRepository.findAll();
+    destinations.forEach(d -> {
+        switch (d.getName()) {
+            case "Araku Valley" ->
+                    d.setImgUrl("/images/destinations/ara.jpg");
+            case "Undavalli Caves" ->
+                    d.setImgUrl("/images/destinations/undava.jpg");
+            case "Kondapalli Fort" ->
+                    d.setImgUrl("/images/destinations/kondap.jpg");
+            case "Kolleru Lake" ->
+                    d.setImgUrl("/images/destinations/koll.jpg");
+            case "Amaravati Stupa" ->
+                    d.setImgUrl("/images/destinations/amstupa.jpg");
+        }
+    });
+    destinationRepository.saveAll(destinations);
+
+    var hotels = hotelRepository.findAll();
+    hotels.forEach(h -> {
+        switch (h.getName()) {
+            case "Hotel Ilapuram" ->
+                    h.setImgUrl("/images/hotels/ilapur.jpg");
+            case "Novotel Vijayawada" ->
+                    h.setImgUrl("/images/hotels/novotel.jpg");
+            case "Araku Valley Resort" ->
+                    h.setImgUrl("/images/hotels/arakures.jpg");
+        }
+    });
+    hotelRepository.saveAll(hotels);
+
+    var foodPlaces = foodPlaceRepository.findAll();
+    foodPlaces.forEach(f -> {
+        switch (f.getName()) {
+            case "Minerva Coffee Shop" ->
+                    f.setImgUrl("/images/food/min.jpg");
+            case "Southern Spice" ->
+                    f.setImgUrl("/images/food/south.jpg");
+        }
+    });
+    foodPlaceRepository.saveAll(foodPlaces);
+
+    var shoppingPlaces = shoppingPlaceRepository.findAll();
+    shoppingPlaces.forEach(s -> {
+        switch (s.getName()) {
+            case "Kondapalli Toys Market" ->
+                    s.setImgUrl("/images/shopping/kondtoys.jpg");
+            case "MG Road Market" ->
+                    s.setImgUrl("/images/shopping/mgroad.jpg");
+        }
+    });
+    shoppingPlaceRepository.saveAll(shoppingPlaces);
+}
 
     private void seedFoodPlaces() {
         FoodPlace f1 = new FoodPlace();
