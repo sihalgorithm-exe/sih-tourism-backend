@@ -48,7 +48,7 @@ public class DataSeeder implements CommandLineRunner {
         d1.setLongitude(82.8770);
         d1.setPopularityScore(3.5);
         d1.setCity("Araku");
-        d1.setImgUrl("/images/destinations/ara.jpg");
+        d1.setImgUrl("/images/destinations/ara.jpeg");
 
         Destination d2 = new Destination();
         d2.setName("Undavalli Caves");
@@ -59,7 +59,7 @@ public class DataSeeder implements CommandLineRunner {
         d2.setLongitude(80.5772);
         d2.setPopularityScore(2.8);
         d2.setCity("Vijayawada");
-        d2.setImgUrl("/images/destinations/undava.jpg");
+        d2.setImgUrl("/images/destinations/undava.jpeg");
 
         Destination d3 = new Destination();
         d3.setName("Kondapalli Fort");
@@ -70,7 +70,7 @@ public class DataSeeder implements CommandLineRunner {
         d3.setLongitude(80.5241);
         d3.setPopularityScore(2.2);
         d3.setCity("Vijayawada");
-        d3.setImgUrl("/images/destinations/kondap.jpg");
+        d3.setImgUrl("/images/destinations/kondap.jpeg");
 
         Destination d4 = new Destination();
         d4.setName("Kolleru Lake");
@@ -81,7 +81,7 @@ public class DataSeeder implements CommandLineRunner {
         d4.setLongitude(81.2000);
         d4.setPopularityScore(2.0);
         d4.setCity("Eluru");
-        d4.setImgUrl("/images/destinations/koll.jpg");
+        d4.setImgUrl("/images/destinations/koll.jpeg");
 
         Destination d5 = new Destination();
         d5.setName("Amaravati Stupa");
@@ -92,7 +92,7 @@ public class DataSeeder implements CommandLineRunner {
         d5.setLongitude(80.3572);
         d5.setPopularityScore(3.0);
         d5.setCity("Amaravati");
-        d5.setImgUrl("/images/destinations/amstupa.jpg");
+        d5.setImgUrl("/images/destinations/amstupa.jpeg");
 
         destinationRepository.saveAll(java.util.List.of(d1, d2, d3, d4, d5));
     }
@@ -106,7 +106,7 @@ public class DataSeeder implements CommandLineRunner {
         h1.setLongitude(80.6480);
         h1.setCity("Vijayawada");
         h1.setRating(3.6);
-        h1.setImgUrl("/images/hotels/ilapur.jpg");
+        h1.setImgUrl("/images/hotels/ilapur.jpeg");
 
         Hotel h2 = new Hotel();
         h2.setName("Novotel Vijayawada");
@@ -116,7 +116,7 @@ public class DataSeeder implements CommandLineRunner {
         h2.setLongitude(80.6296);
         h2.setCity("Vijayawada");
         h2.setRating(4.5);
-        h2.setImgUrl("/images/hotels/novotel.jpg");
+        h2.setImgUrl("/images/hotels/novotel.jpeg");
 
         Hotel h3 = new Hotel();
         h3.setName("Araku Valley Resort");
@@ -126,7 +126,7 @@ public class DataSeeder implements CommandLineRunner {
         h3.setLongitude(82.8800);
         h3.setCity("Araku");
         h3.setRating(4.0);
-        h3.setImgUrl("/images/hotels/arakures.jpg");
+        h3.setImgUrl("/images/hotels/arakures.jpeg");
 
         hotelRepository.saveAll(java.util.List.of(h1, h2, h3));
     }
@@ -159,15 +159,15 @@ public class DataSeeder implements CommandLineRunner {
     destinations.forEach(d -> {
         switch (d.getName()) {
             case "Araku Valley" ->
-                    d.setImgUrl("/images/destinations/ara.jpg");
+                    d.setImgUrl("/images/destinations/ara.jpeg");
             case "Undavalli Caves" ->
-                    d.setImgUrl("/images/destinations/undava.jpg");
+                    d.setImgUrl("/images/destinations/undava.jpeg");
             case "Kondapalli Fort" ->
-                    d.setImgUrl("/images/destinations/kondap.jpg");
+                    d.setImgUrl("/images/destinations/kondap.jpeg");
             case "Kolleru Lake" ->
-                    d.setImgUrl("/images/destinations/koll.jpg");
+                    d.setImgUrl("/images/destinations/koll.jpeg");
             case "Amaravati Stupa" ->
-                    d.setImgUrl("/images/destinations/amstupa.jpg");
+                    d.setImgUrl("/images/destinations/amstupa.jpeg");
         }
     });
     destinationRepository.saveAll(destinations);
@@ -176,11 +176,11 @@ public class DataSeeder implements CommandLineRunner {
     hotels.forEach(h -> {
         switch (h.getName()) {
             case "Hotel Ilapuram" ->
-                    h.setImgUrl("/images/hotels/ilapur.jpg");
+                    h.setImgUrl("/images/hotels/ilapur.jpeg");
             case "Novotel Vijayawada" ->
-                    h.setImgUrl("/images/hotels/novotel.jpg");
+                    h.setImgUrl("/images/hotels/novotel.jpeg");
             case "Araku Valley Resort" ->
-                    h.setImgUrl("/images/hotels/arakures.jpg");
+                    h.setImgUrl("/images/hotels/arakures.jpeg");
         }
     });
     hotelRepository.saveAll(hotels);
@@ -189,9 +189,9 @@ public class DataSeeder implements CommandLineRunner {
     foodPlaces.forEach(f -> {
         switch (f.getName()) {
             case "Minerva Coffee Shop" ->
-                    f.setImgUrl("/images/food/min.jpg");
+                    f.setImgUrl("/images/food/min.jpeg");
             case "Southern Spice" ->
-                    f.setImgUrl("/images/food/south.jpg");
+                    f.setImgUrl("/images/food/south.jpeg");
         }
     });
     foodPlaceRepository.saveAll(foodPlaces);
@@ -200,9 +200,9 @@ public class DataSeeder implements CommandLineRunner {
     shoppingPlaces.forEach(s -> {
         switch (s.getName()) {
             case "Kondapalli Toys Market" ->
-                    s.setImgUrl("/images/shopping/kondtoys.jpg");
+                    s.setImgUrl("/images/shopping/kondtoys.jpeg");
             case "MG Road Market" ->
-                    s.setImgUrl("/images/shopping/mgroad.jpg");
+                    s.setImgUrl("/images/shopping/mgroad.jpeg");
         }
     });
     shoppingPlaceRepository.saveAll(shoppingPlaces);
@@ -218,7 +218,7 @@ public class DataSeeder implements CommandLineRunner {
         f1.setLongitude(80.6300);
         f1.setCity("Vijayawada");
         f1.setRating(4.2);
-        f1.setImgUrl("/images/food/min.jpg");
+        f1.setImgUrl("/images/food/min.jpeg");
 
         FoodPlace f2 = new FoodPlace();
         f2.setName("Southern Spice");
@@ -229,7 +229,7 @@ public class DataSeeder implements CommandLineRunner {
         f2.setLongitude(80.6470);
         f2.setCity("Vijayawada");
         f2.setRating(4.6);
-        f2.setImgUrl("/images/food/south.jpg");
+        f2.setImgUrl("/images/food/south.jpeg");
 
         foodPlaceRepository.saveAll(java.util.List.of(f1, f2));
     }
@@ -243,7 +243,7 @@ public class DataSeeder implements CommandLineRunner {
         s1.setLatitude(16.6150);
         s1.setLongitude(80.5250);
         s1.setCity("Vijayawada");
-        s1.setImgUrl("/images/shopping/kondtoys.jpg");
+        s1.setImgUrl("/images/shopping/kondtoys.jpeg");
 
         ShoppingPlace s2 = new ShoppingPlace();
         s2.setName("MG Road Market");
@@ -253,7 +253,7 @@ public class DataSeeder implements CommandLineRunner {
         s2.setLatitude(16.5060);
         s2.setLongitude(80.6440);
         s2.setCity("Vijayawada");
-        s2.setImgUrl("/images/shopping/mgroad.jpg");
+        s2.setImgUrl("/images/shopping/mgroad.jpeg");
 
         shoppingPlaceRepository.saveAll(java.util.List.of(s1, s2));
     }
