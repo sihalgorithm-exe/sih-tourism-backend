@@ -1,6 +1,15 @@
 package com.sih.tourism.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "user_preferences")
@@ -25,6 +34,19 @@ public class UserPreference {
 
     @Column(name = "preferred_category")
     private String preferredCategory;
+
+    @Column(name = "mood")
+private String mood; // comma-separated, same convention as interests
+
+@Enumerated(EnumType.STRING)
+@Column(name = "traveling_with")
+private TravelingWith travelingWith;
+
+// getters/setters
+public String getMood() { return mood; }
+public void setMood(String mood) { this.mood = mood; }
+public TravelingWith getTravelingWith() { return travelingWith; }
+public void setTravelingWith(TravelingWith travelingWith) { this.travelingWith = travelingWith; }
 
     public UserPreference() {
     }

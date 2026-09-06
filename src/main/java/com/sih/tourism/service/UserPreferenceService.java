@@ -1,13 +1,14 @@
 package com.sih.tourism.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.sih.tourism.dto.request.UserPreferenceRequest;
 import com.sih.tourism.entity.User;
 import com.sih.tourism.entity.UserPreference;
 import com.sih.tourism.exception.ResourceNotFoundException;
 import com.sih.tourism.repository.UserPreferenceRepository;
 import com.sih.tourism.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserPreferenceService {
@@ -37,6 +38,8 @@ public class UserPreferenceService {
         preference.setInterests(request.getInterests());
         preference.setBudgetLevel(request.getBudgetLevel());
         preference.setPreferredCategory(request.getPreferredCategory());
+        preference.setMood(request.getMood());
+        preference.setTravelingWith(request.getTravelingWith());
 
         return userPreferenceRepository.save(preference);
     }
