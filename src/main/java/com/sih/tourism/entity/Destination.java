@@ -37,6 +37,8 @@ public class Destination {
     private Double popularityScore;
 
     private String city;
+
+    private Double visitDurationHours;
     
     private String imgUrl;
     
@@ -110,6 +112,14 @@ public class Destination {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public Double getVisitDurationHours() {
+        return visitDurationHours;
+    }
+
+    public void setVisitDurationHours(Double visitDurationHours) {
+        this.visitDurationHours = visitDurationHours;
     }
 
     public String getImgUrl() {

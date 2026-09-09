@@ -48,6 +48,7 @@ public class DataSeeder implements CommandLineRunner {
         d1.setLongitude(82.8770);
         d1.setPopularityScore(3.5);
         d1.setCity("Araku");
+        d1.setVisitDurationHours(4.0);
         d1.setImgUrl("/images/destinations/ara.jpeg");
 
         Destination d2 = new Destination();
@@ -59,6 +60,7 @@ public class DataSeeder implements CommandLineRunner {
         d2.setLongitude(80.5772);
         d2.setPopularityScore(2.8);
         d2.setCity("Vijayawada");
+        d2.setVisitDurationHours(1.5);
         d2.setImgUrl("/images/destinations/undava.jpeg");
 
         Destination d3 = new Destination();
@@ -70,6 +72,7 @@ public class DataSeeder implements CommandLineRunner {
         d3.setLongitude(80.5241);
         d3.setPopularityScore(2.2);
         d3.setCity("Vijayawada");
+        d3.setVisitDurationHours(2.0);
         d3.setImgUrl("/images/destinations/kondap.jpeg");
 
         Destination d4 = new Destination();
@@ -81,6 +84,7 @@ public class DataSeeder implements CommandLineRunner {
         d4.setLongitude(81.2000);
         d4.setPopularityScore(2.0);
         d4.setCity("Eluru");
+        d4.setVisitDurationHours(2.5);
         d4.setImgUrl("/images/destinations/koll.jpeg");
 
         Destination d5 = new Destination();
@@ -92,6 +96,7 @@ public class DataSeeder implements CommandLineRunner {
         d5.setLongitude(80.3572);
         d5.setPopularityScore(3.0);
         d5.setCity("Amaravati");
+        d5.setVisitDurationHours(2.0);
         d5.setImgUrl("/images/destinations/amstupa.jpeg");
 
         destinationRepository.saveAll(java.util.List.of(d1, d2, d3, d4, d5));
