@@ -7,6 +7,7 @@ import com.sih.tourism.repository.UserPreferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -26,8 +27,9 @@ public class RecommendationService {
     /**
      * Rule-based recommendation: NOT machine learning.
      *
-     * Filters destinations by the user's preferred category (when set)
-     * and ranks the results by popularity score.
+     * Filters destinations by whether any of the user's selected interests
+     * appears in the destination's category/subcategory/interests/
+     * experienceTypes/moodTags text, then ranks by popularity score.
      *
      * If the user has no preferences saved yet, returns all destinations
      * sorted by popularity score.
@@ -39,7 +41,9 @@ public class RecommendationService {
         UserPreference preference =
                 userPreferenceRepository.findByUserId(userId).orElse(null);
 
-        if (preference == null) {
+        if (preference == null
+                || preference.getInterests() == null
+                || preference.getInterests().isBlank()) {
             return all.stream()
                     .sorted(Comparator.comparing(
                             Destination::getPopularityScore,
@@ -48,17 +52,31 @@ public class RecommendationService {
                     .toList();
         }
 
+        List<String> userInterests = Arrays.stream(preference.getInterests().split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .map(String::toLowerCase)
+                .toList();
+
         return all.stream()
-                .filter(d -> preference.getPreferredCategory() == null
-                        || preference.getPreferredCategory().isBlank()
-                        || (d.getCategory() != null
-                        && d.getCategory().equalsIgnoreCase(
-                                preference.getPreferredCategory()
-                        )))
+                .filter(d -> matchesInterests(d, userInterests))
                 .sorted(Comparator.comparing(
                         Destination::getPopularityScore,
                         Comparator.nullsLast(Comparator.reverseOrder())
                 ))
                 .toList();
+    }
+
+    private boolean matchesInterests(Destination d, List<String> userInterests) {
+        String haystack = String.join(" | ",
+                safe(d.getCategory()), safe(d.getSubcategory()), safe(d.getInterests()),
+                safe(d.getExperienceTypes()), safe(d.getMoodTags())
+        ).toLowerCase();
+
+        return userInterests.stream().anyMatch(haystack::contains);
+    }
+
+    private String safe(String s) {
+        return s == null ? "" : s;
     }
 }
