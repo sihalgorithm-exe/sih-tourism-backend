@@ -36,7 +36,8 @@ public class FoodPlace {
     @Column(name = "price_range")
     private String priceRange;
 
-    private String rating;
+    @Column(name = "rating_text")
+    private String ratingText;
 
     @Column(name = "speciality", length = 1000)
     private String speciality;
@@ -126,12 +127,12 @@ public class FoodPlace {
         this.priceRange = priceRange;
     }
 
-    public String getRating() {
-        return rating;
+    public String getRatingText() {
+        return ratingText;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setRatingText(String ratingText) {
+        this.ratingText = ratingText;
     }
 
     public String getSpeciality() {

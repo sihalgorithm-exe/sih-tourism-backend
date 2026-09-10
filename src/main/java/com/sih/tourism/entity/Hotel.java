@@ -31,7 +31,8 @@ public class Hotel {
     @Column(name = "price_range")
     private String priceRange;
 
-    private String rating;
+    @Column(name = "rating_text")
+    private String ratingText;
 
     @Column(length = 2000)
     private String amenities;
@@ -103,12 +104,12 @@ public class Hotel {
         this.priceRange = priceRange;
     }
 
-    public String getRating() {
-        return rating;
+    public String getRatingText() {
+        return ratingText;
     }
 
-    public void setRating(String rating) {
-        this.rating = rating;
+    public void setRatingText(String ratingText) {
+        this.ratingText = ratingText;
     }
 
     public String getAmenities() {
