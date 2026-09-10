@@ -1,6 +1,11 @@
 package com.sih.tourism.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "transport_options")
@@ -13,16 +18,23 @@ public class TransportOption {
     @Column(nullable = false)
     private String name; // e.g. "City Bus", "Auto Rickshaw Stand", "Local Ferry"
 
-    @Column(length = 1000)
-    private String description;
-
     private String type; // e.g. "bus", "auto", "ferry", "metro"
 
     private String city;
 
+    private String state; 
+
+    private String address;
+
     private Double latitude;
 
     private Double longitude;
+
+    private int contact;
+
+    private String nearbyAttributes;
+
+    private String imgUrl;
 
     public TransportOption() {
     }
@@ -37,14 +49,6 @@ public class TransportOption {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getType() {
@@ -63,6 +67,23 @@ public class TransportOption {
         this.city = city;
     }
 
+    public String getState(){
+        return state;
+    }
+
+    public void setState(String state){
+        this.state = state;
+    }
+
+    public String getAddress(){
+        return address;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
+
     public Double getLatitude() {
         return latitude;
     }
@@ -77,5 +98,29 @@ public class TransportOption {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getContact(){
+        return contact;
+    }
+
+    public void setContact(int contact){
+        this.contact = contact;
+    }
+
+    public String getAttribute(){
+        return nearbyAttributes;
+    }
+
+    public void setAttribute(String nearbyAttributes){
+        this.nearbyAttributes = nearbyAttributes;
+    }
+
+    public String getImgUrl(){
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl){
+        this.imgUrl = imgUrl;
     }
 }
