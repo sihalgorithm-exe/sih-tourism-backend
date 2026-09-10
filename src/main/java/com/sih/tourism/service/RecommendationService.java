@@ -27,10 +27,10 @@ public class RecommendationService {
      * Rule-based recommendation: NOT machine learning.
      *
      * Filters destinations by the user's preferred category (when set)
-     * and ranks the results by popularity.
+     * and ranks the results by popularity score.
      *
      * If the user has no preferences saved yet, returns all destinations
-     * sorted by popularity as a sensible default.
+     * sorted by popularity score.
      */
     public List<Destination> recommendForUser(Long userId) {
 
@@ -39,7 +39,6 @@ public class RecommendationService {
         UserPreference preference =
                 userPreferenceRepository.findByUserId(userId).orElse(null);
 
-        // No preferences saved → return all destinations by popularity
         if (preference == null) {
             return all.stream()
                     .sorted(Comparator.comparing(
@@ -49,7 +48,6 @@ public class RecommendationService {
                     .toList();
         }
 
-        // Filter only by preferred category
         return all.stream()
                 .filter(d -> preference.getPreferredCategory() == null
                         || preference.getPreferredCategory().isBlank()
@@ -62,6 +60,5 @@ public class RecommendationService {
                         Comparator.nullsLast(Comparator.reverseOrder())
                 ))
                 .toList();
-
-        }
+    }
 }
