@@ -18,8 +18,11 @@ public class HotelController {
         this.hotelService = hotelService;
     }
 
-    @GetMapping
-    public List<Hotel> getAll() {
+        @GetMapping
+    public List<Hotel> getAll(@RequestParam(required = false) String city) {
+        if (city != null && !city.isBlank()) {
+            return hotelService.getByCity(city);
+        }
         return hotelService.getAll();
     }
 

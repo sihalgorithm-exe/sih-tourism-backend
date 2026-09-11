@@ -18,8 +18,12 @@ public class HotelService {
         this.hotelRepository = hotelRepository;
     }
 
-    public List<Hotel> getAll() {
+        public List<Hotel> getAll() {
         return hotelRepository.findAll();
+    }
+
+    public List<Hotel> getByCity(String city) {
+        return hotelRepository.findByCityIgnoreCase(city);
     }
 
     public Hotel getById(Long id) {
