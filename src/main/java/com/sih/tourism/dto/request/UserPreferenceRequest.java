@@ -8,6 +8,9 @@ public class UserPreferenceRequest {
     private String interests; // comma-separated for MVP simplicity
     private BudgetLevel budgetLevel;
     private String preferredCategory;
+    private String preferredState;
+    private String preferredCity;
+
 
     public String getInterests() {
         return interests;
@@ -51,5 +54,21 @@ public class UserPreferenceRequest {
     
     public void setTravelingWith(TravelingWith travelingWith) { 
         this.travelingWith = travelingWith; 
+    }
+
+    public String getPreferredState() {
+        return preferredState;
+    }
+
+    public void setPreferredState(String preferredState) {
+        this.preferredState = preferredState;
+    }
+
+    public String getPreferredCity() {
+        return preferredCity;
+    }
+
+    public void setPreferredCity(String preferredCity) {
+        this.preferredCity = preferredCity;
     }
 }

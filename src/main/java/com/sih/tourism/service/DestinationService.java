@@ -1,12 +1,13 @@
 package com.sih.tourism.service;
 
-import com.sih.tourism.entity.Destination;
-import com.sih.tourism.exception.ResourceNotFoundException;
-import com.sih.tourism.repository.DestinationRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.sih.tourism.entity.Destination;
+import com.sih.tourism.exception.ResourceNotFoundException;
+import com.sih.tourism.repository.DestinationRepository;
 
 @Service
 public class DestinationService {
@@ -25,5 +26,13 @@ public class DestinationService {
     public Destination getById(Long id) {
         return destinationRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Destination not found with id: " + id));
+    }
+
+    public List<String> getAllStates() {
+        return destinationRepository.findDistinctStates();
+    }
+
+    public List<String> getCitiesByState(String state) {
+        return destinationRepository.findDistinctCitiesByState(state);
     }
 }

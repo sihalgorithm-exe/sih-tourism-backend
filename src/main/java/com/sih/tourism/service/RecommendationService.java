@@ -1,15 +1,16 @@
 package com.sih.tourism.service;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.sih.tourism.entity.Destination;
 import com.sih.tourism.entity.UserPreference;
 import com.sih.tourism.repository.DestinationRepository;
 import com.sih.tourism.repository.UserPreferenceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
 
 @Service
 public class RecommendationService {
@@ -34,17 +35,28 @@ public class RecommendationService {
      * If the user has no preferences saved yet, returns all destinations
      * sorted by popularity score.
      */
-    public List<Destination> recommendForUser(Long userId) {
+        public List<Destination> recommendForUser(Long userId) {
 
         List<Destination> all = destinationRepository.findAll();
 
         UserPreference preference =
                 userPreferenceRepository.findByUserId(userId).orElse(null);
 
-        if (preference == null
-                || preference.getInterests() == null
-                || preference.getInterests().isBlank()) {
+        if (preference == null) {
             return all.stream()
+                    .sorted(Comparator.comparing(
+                            Destination::getPopularityScore,
+                            Comparator.nullsLast(Comparator.reverseOrder())
+                    ))
+                    .toList();
+        }
+
+        List<Destination> filtered = all.stream()
+                .filter(d -> matchesLocation(d, preference))
+                .toList();
+
+        if (preference.getInterests() == null || preference.getInterests().isBlank()) {
+            return filtered.stream()
                     .sorted(Comparator.comparing(
                             Destination::getPopularityScore,
                             Comparator.nullsLast(Comparator.reverseOrder())
@@ -58,13 +70,25 @@ public class RecommendationService {
                 .map(String::toLowerCase)
                 .toList();
 
-        return all.stream()
+        return filtered.stream()
                 .filter(d -> matchesInterests(d, userInterests))
                 .sorted(Comparator.comparing(
                         Destination::getPopularityScore,
                         Comparator.nullsLast(Comparator.reverseOrder())
                 ))
                 .toList();
+    }
+
+    private boolean matchesLocation(Destination d, UserPreference preference) {
+        boolean stateOk = preference.getPreferredState() == null
+                || preference.getPreferredState().isBlank()
+                || preference.getPreferredState().equalsIgnoreCase(safe(d.getState()));
+
+        boolean cityOk = preference.getPreferredCity() == null
+                || preference.getPreferredCity().isBlank()
+                || preference.getPreferredCity().equalsIgnoreCase(safe(d.getCity()));
+
+        return stateOk && cityOk;
     }
 
     private boolean matchesInterests(Destination d, List<String> userInterests) {

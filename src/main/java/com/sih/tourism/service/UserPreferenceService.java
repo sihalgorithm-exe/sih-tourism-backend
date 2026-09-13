@@ -40,6 +40,8 @@ public class UserPreferenceService {
         preference.setPreferredCategory(request.getPreferredCategory());
         preference.setMood(request.getMood());
         preference.setTravelingWith(request.getTravelingWith());
+        preference.setPreferredState(request.getPreferredState());
+        preference.setPreferredCity(request.getPreferredCity());
 
         return userPreferenceRepository.save(preference);
     }

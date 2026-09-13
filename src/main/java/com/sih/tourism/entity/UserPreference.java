@@ -35,6 +35,12 @@ public class UserPreference {
     @Column(name = "preferred_category")
     private String preferredCategory;
 
+    @Column(name = "preferred_state")
+    private String preferredState;
+
+    @Column(name = "preferred_city")
+    private String preferredCity;
+
     @Column(name = "mood")
 private String mood; // comma-separated, same convention as interests
 
@@ -92,5 +98,21 @@ public void setTravelingWith(TravelingWith travelingWith) { this.travelingWith =
 
     public void setPreferredCategory(String preferredCategory) {
         this.preferredCategory = preferredCategory;
+    }
+
+    public String getPreferredState() {
+        return preferredState;
+    }
+
+    public void setPreferredState(String preferredState) {
+        this.preferredState = preferredState;
+    }
+
+    public String getPreferredCity() {
+        return preferredCity;
+    }
+
+    public void setPreferredCity(String preferredCity) {
+        this.preferredCity = preferredCity;
     }
 }
