@@ -11,14 +11,21 @@ public class SafetyAlertResponse {
     private Double distanceMeters;
     private LocalDateTime triggeredAt;
 
+        private String alertType;
+
     public SafetyAlertResponse(Long alertId, Long groupMemberId, Long userId, String userName,
-                                Double distanceMeters, LocalDateTime triggeredAt) {
+                                Double distanceMeters, LocalDateTime triggeredAt, String alertType) {
         this.alertId = alertId;
         this.groupMemberId = groupMemberId;
         this.userId = userId;
         this.userName = userName;
         this.distanceMeters = distanceMeters;
         this.triggeredAt = triggeredAt;
+        this.alertType = alertType;
+    }
+
+    public String getAlertType() {
+        return alertType;
     }
 
     public Long getAlertId() {

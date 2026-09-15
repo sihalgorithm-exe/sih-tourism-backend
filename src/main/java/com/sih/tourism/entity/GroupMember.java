@@ -1,7 +1,18 @@
 package com.sih.tourism.entity;
 
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "group_members", uniqueConstraints = {
@@ -22,12 +33,38 @@ public class GroupMember {
     @JoinColumn(name = "group_id", nullable = false)
     private TravelGroup group;
 
-    // State machine flag for exit-event alerting. Not applicable/used for the leader's own row.
-    @Column(name = "is_out_of_bounds", nullable = false)
+        @Column(name = "is_out_of_bounds", nullable = false)
     private boolean outOfBounds = false;
+
+    // Reuses the outOfBounds flag above for detection; this field only tracks
+    // the member's response to the "Are you lost?" prompt that follows it.
+    // OK -> PENDING_RESPONSE -> (SAFE | LOST | NEEDS_HELP | NO_RESPONSE) -> OK
+    @Column(name = "guard_status", nullable = false)
+    private String guardStatus = "OK";
+
+    // When guardStatus last changed to PENDING_RESPONSE - used by the
+    // escalation sweep to detect the 5-minute no-response window.
+    @Column(name = "status_updated_at")
+    private LocalDateTime statusUpdatedAt;
 
     @Column(name = "joined_at", nullable = false, updatable = false)
     private LocalDateTime joinedAt;
+
+    public String getGuardStatus() {
+        return guardStatus;
+    }
+
+    public void setGuardStatus(String guardStatus) {
+        this.guardStatus = guardStatus;
+    }
+
+    public LocalDateTime getStatusUpdatedAt() {
+        return statusUpdatedAt;
+    }
+
+    public void setStatusUpdatedAt(LocalDateTime statusUpdatedAt) {
+        this.statusUpdatedAt = statusUpdatedAt;
+    }
 
     public GroupMember() {
     }
