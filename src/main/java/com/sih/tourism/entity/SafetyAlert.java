@@ -36,7 +36,7 @@ public class SafetyAlert {
     private Double distanceMeters;
 
     // OUT_OF_RANGE (existing/default) | LOST | NEEDS_HELP | NO_RESPONSE
-    @Column(name = "alert_type", nullable = false)
+        @Column(name = "alert_type", nullable = false, columnDefinition = "varchar(255) default 'OUT_OF_RANGE'")
     private String alertType = "OUT_OF_RANGE";
 
     @Column(name = "triggered_at", nullable = false, updatable = false)

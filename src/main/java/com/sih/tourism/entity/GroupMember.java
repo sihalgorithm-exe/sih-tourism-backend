@@ -39,7 +39,7 @@ public class GroupMember {
     // Reuses the outOfBounds flag above for detection; this field only tracks
     // the member's response to the "Are you lost?" prompt that follows it.
     // OK -> PENDING_RESPONSE -> (SAFE | LOST | NEEDS_HELP | NO_RESPONSE) -> OK
-    @Column(name = "guard_status", nullable = false)
+    @Column(name = "guard_status", nullable = false, columnDefinition = "varchar(255) default 'OK'")
     private String guardStatus = "OK";
 
     // When guardStatus last changed to PENDING_RESPONSE - used by the
