@@ -67,10 +67,37 @@ public class GroupController {
         Long userId = SecurityUtil.getCurrentUserId();
 
         groupService.joinGroup(groupId, userId);
+        
 
         TravelGroup group = groupService.getGroupOrThrow(groupId);
 
         return ResponseEntity.ok(toResponse(group));
+    }
+
+        /**
+     * Current authenticated user (must not be the leader) leaves the group.
+     */
+    @org.springframework.web.bind.annotation.DeleteMapping("/{groupId}/leave")
+    public ResponseEntity<Void> leaveGroup(@PathVariable Long groupId) {
+
+        Long userId = SecurityUtil.getCurrentUserId();
+
+        groupService.leaveGroup(groupId, userId);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Group leader terminates/deletes the group entirely.
+     */
+    @org.springframework.web.bind.annotation.DeleteMapping("/{groupId}")
+    public ResponseEntity<Void> terminateGroup(@PathVariable Long groupId) {
+
+        Long userId = SecurityUtil.getCurrentUserId();
+
+        groupService.terminateGroup(groupId, userId);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{groupId}")

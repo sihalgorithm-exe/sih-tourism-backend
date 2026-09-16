@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sih.tourism.dto.request.CreateGroupRequest;
 import com.sih.tourism.entity.GroupMember;
@@ -13,25 +14,32 @@ import com.sih.tourism.exception.DuplicateResourceException;
 import com.sih.tourism.exception.ResourceNotFoundException;
 import com.sih.tourism.exception.UnauthorizedActionException;
 import com.sih.tourism.repository.GroupMemberRepository;
+import com.sih.tourism.repository.LocationUpdateRepository;
+import com.sih.tourism.repository.SafetyAlertRepository;
 import com.sih.tourism.repository.TravelGroupRepository;
 import com.sih.tourism.repository.UserRepository;
-
 @Service
 public class GroupService {
 
     private final TravelGroupRepository travelGroupRepository;
     private final GroupMemberRepository groupMemberRepository;
     private final UserRepository userRepository;
+    private final LocationUpdateRepository locationUpdateRepository;
+    private final SafetyAlertRepository safetyAlertRepository;
 
     @Autowired
     public GroupService(
             TravelGroupRepository travelGroupRepository,
             GroupMemberRepository groupMemberRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            LocationUpdateRepository locationUpdateRepository,
+            SafetyAlertRepository safetyAlertRepository
     ) {
         this.travelGroupRepository = travelGroupRepository;
         this.groupMemberRepository = groupMemberRepository;
         this.userRepository = userRepository;
+        this.locationUpdateRepository = locationUpdateRepository;
+        this.safetyAlertRepository = safetyAlertRepository;
     }
 
     public TravelGroup createGroup(Long creatorUserId, CreateGroupRequest request) {
@@ -135,5 +143,53 @@ public class GroupService {
     public boolean isLeader(TravelGroup group, Long userId) {
 
         return group.getLeader().getId().equals(userId);
+    }
+        /**
+     * A member (not the leader) exits the group at will. The leader must use
+     * terminateGroup() instead - a group can't be left leaderless.
+     */
+    @Transactional
+    public void leaveGroup(Long groupId, Long userId) {
+
+        TravelGroup group = getGroupOrThrow(groupId);
+
+        if (isLeader(group, userId)) {
+            throw new UnauthorizedActionException(
+                    "The group leader cannot leave the group. Terminate the group instead."
+            );
+        }
+
+        GroupMember membership = getMembershipOrThrow(userId, groupId);
+
+        safetyAlertRepository.deleteByGroupMemberId(membership.getId());
+        locationUpdateRepository.deleteByGroupMemberId(membership.getId());
+        groupMemberRepository.delete(membership);
+    }
+
+    /**
+     * Leader deletes the entire group. Cleans up all dependent rows first
+     * (location history, safety alerts, memberships) before removing the
+     * group itself, to satisfy foreign key constraints.
+     */
+    @Transactional
+    public void terminateGroup(Long groupId, Long requesterUserId) {
+
+        TravelGroup group = getGroupOrThrow(groupId);
+
+        if (!isLeader(group, requesterUserId)) {
+            throw new UnauthorizedActionException(
+                    "Only the group leader can terminate the group"
+            );
+        }
+
+        List<GroupMember> members = groupMemberRepository.findByGroupId(groupId);
+        List<Long> memberIds = members.stream().map(GroupMember::getId).toList();
+
+        safetyAlertRepository.deleteByGroupId(groupId);
+        if (!memberIds.isEmpty()) {
+            locationUpdateRepository.deleteByGroupMemberIdIn(memberIds);
+        }
+        groupMemberRepository.deleteAll(members);
+        travelGroupRepository.delete(group);
     }
 }
