@@ -71,7 +71,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         // Discovery data is public - browsing doesn't require login.
                         .requestMatchers(HttpMethod.GET, "/api/destinations/**", "/api/hotels/**",
-                                "/api/food/**", "/api/shopping/**", "/api/transport/**").permitAll()
+                                "/api/food/**", "/api/shopping/**", "/api/transport/**",
+                                "/api/travel-estimates/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
